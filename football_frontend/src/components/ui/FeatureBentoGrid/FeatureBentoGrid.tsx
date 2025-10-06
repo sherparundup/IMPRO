@@ -1,44 +1,43 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import createGlobe from "cobe";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { motion } from "motion/react";
 import { IconBrandYoutubeFilled } from "@tabler/icons-react";
-import { div } from "motion/react-client";
 
 export function FeaturesSectionDemo() {
   const features = [
-    {
-      title: "Track issues effectively",
-      description:
-        "Track and manage your project issues with ease using our intuitive interface.",
-      skeleton: <SkeletonOne />,
-      className:
-        "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
-    },
-    {
-      title: "Capture pictures with AI",
-      description:
-        "Capture stunning photos effortlessly using our advanced AI technology.",
-      skeleton: <SkeletonTwo />,
-      className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
-    },
-    {
-      title: "Watch our AI on YouTube",
-      description:
-        "Whether its you or Tyler Durden, you can get to know about our product on YouTube",
-      skeleton: <SkeletonThree />,
-      className:
-        "col-span-1 lg:col-span-3 lg:border-r  dark:border-neutral-800",
-    },
-    {
-      title: "Deploy in seconds",
-      description:
-        "With our blazing fast, state of the art, cutting edge, we are so back cloud servies (read AWS) - you can deploy your model in seconds.",
-      skeleton: <SkeletonFour />,
-      className: "col-span-1 lg:col-span-3 border-b lg:border-none",
-    },
-  ];
+  {
+    title: "Free Trial Training",
+    description:
+      "New players can experience two 45-minute training sessions at a discounted rate. This helps our coaches evaluate your current skills, identify areas for improvement, and introduce you to our coaching style. It’s the perfect opportunity to see if our academy is the right fit for your football journey.",
+    skeleton: <SkeletonOne />,
+    className:
+      "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
+  },
+  {
+    title: "AI Performance Analysis",
+    description:
+      "Get your training sessions recorded and analyzed using our AI tools to track progress, correct form, and improve performance like a pro.",
+    skeleton: <SkeletonTwo />,
+    className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
+  },
+  {
+    title: "Watch Our Training Highlights",
+    description:
+      "Check out our latest training drills, match highlights, and player development videos on YouTube to see what makes our academy special.",
+    skeleton: <SkeletonThree />,
+    className:
+      "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
+  },
+  {
+    title: "Join and Play Instantly",
+    description:
+      "Our seamless registration process lets you join our academy and start training right away — no waiting, just pure football action.",
+    skeleton: <SkeletonFour />,
+    className: "col-span-1 lg:col-span-3 border-b lg:border-none",
+  },
+];
+
   return (
     <div className="min-w-full bg-black">
       <div className="relative  z-20 py-10 lg:py-40 max-w-7xl mx-auto">
@@ -98,9 +97,9 @@ const FeatureDescription = ({ children }: { children?: React.ReactNode }) => {
   return (
     <p
       className={cn(
-        "text-sm md:text-base  max-w-4xl text-left mx-auto",
+        "text-sm md:text-base  max-w-6xl text-left mx-auto",
         "text-neutral-500 text-center font-normal dark:text-neutral-300",
-        "text-left max-w-sm mx-0 md:text-sm my-2"
+        "text-left max-w-max mx-0 md:text-sm my-2"
       )}
     >
       {children}
@@ -115,7 +114,7 @@ export const SkeletonOne = () => {
         <div className="flex flex-1 w-full h-full flex-col space-y-2  ">
           {/* TODO */}
           <img
-            src="/linear.webp"
+            src="https://i.pinimg.com/736x/bd/0a/dd/bd0add3301166056fad77b7c16f2541b.jpg"
             alt="header"
             width={800}
             height={800}
@@ -133,7 +132,7 @@ export const SkeletonOne = () => {
 export const SkeletonThree = () => {
   return (
     <a
-      href="https://www.youtube.com/watch?v=RPa3_AD1_Vs"
+      href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1"
       target="__blank"
       className="relative flex gap-10  h-full group/image"
     >
@@ -142,7 +141,7 @@ export const SkeletonThree = () => {
           {/* TODO */}
           <IconBrandYoutubeFilled className="h-20 w-20 absolute z-10 inset-0 text-red-500 m-auto " />
           <img
-            src="https://assets.aceternity.com/fireship.jpg"
+            src="https://i.pinimg.com/736x/bd/0a/dd/bd0add3301166056fad77b7c16f2541b.jpg"
             alt="header"
             width={800}
             height={800}
@@ -203,56 +202,24 @@ export const SkeletonTwo = () => {
 
 export const SkeletonFour = () => {
   return (
-    <div className="h-60 md:h-60  flex flex-col items-center relative bg-transparent dark:bg-transparent mt-10">
-      <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" />
+    <div className="relative flex py-8 px-2 gap-10 h-full">
+      <div className="w-full p-5 mx-auto bg-white dark:bg-neutral-900 shadow-2xl group h-full">
+        <div className="flex flex-1 w-full h-full flex-col space-y-2">
+          <img
+            src="https://i.pinimg.com/736x/bd/0a/dd/bd0add3301166056fad77b7c16f2541b.jpg"
+            alt="football training"
+            width={800}
+            height={800}
+            className="h-full w-full aspect-square object-cover object-center rounded-sm"
+          />
+        </div>
+      </div>
+
+      <div className="absolute bottom-0 z-40 inset-x-0 h-60 bg-gradient-to-t from-white dark:from-black via-white dark:via-black to-transparent w-full pointer-events-none" />
+      <div className="absolute top-0 z-40 inset-x-0 h-60 bg-gradient-to-b from-white dark:from-black via-transparent to-transparent w-full pointer-events-none" />
     </div>
   );
 };
 
-export const Globe = ({ className }: { className?: string }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    let phi = 0;
 
-    if (!canvasRef.current) return;
-
-    const globe = createGlobe(canvasRef.current, {
-      devicePixelRatio: 2,
-      width: 600 * 2,
-      height: 600 * 2,
-      phi: 0,
-      theta: 0,
-      dark: 1,
-      diffuse: 1.2,
-      mapSamples: 16000,
-      mapBrightness: 6,
-      baseColor: [0.3, 0.3, 0.3],
-      markerColor: [0.1, 0.8, 1],
-      glowColor: [1, 1, 1],
-      markers: [
-        // longitude latitude
-        { location: [37.7595, -122.4367], size: 0.03 },
-        { location: [40.7128, -74.006], size: 0.1 },
-      ],
-      onRender: (state) => {
-        // Called on every animation frame.
-        // `state` will be an empty object, return updated params.
-        state.phi = phi;
-        phi += 0.01;
-      },
-    });
-
-    return () => {
-      globe.destroy();
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{ width: 600, height: 600, maxWidth: "100%", aspectRatio: 1 }}
-      className={className}
-    />
-  );
-};

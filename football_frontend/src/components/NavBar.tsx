@@ -1,15 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import * as Popover from "@radix-ui/react-popover";
 import { ChevronDown, Archive, BookText, Menu, X } from "lucide-react";
 import { FaCode } from "react-icons/fa6";
 import clsx from "clsx";
 import { bold_poppins, normal_poppins } from "@/lib/fonts";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useSyncGoogleUser } from "@/hooks/auth";
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
+  const { mutateAsync: syncUser } = useSyncGoogleUser();
+
+  // Sync Google user to backend automatically after login
+  useEffect(() => {
+    if (session?.user) {
+      syncUser({
+        name: session.user.name!,
+        email: session.user.email!,
+        image: session.user.image!,
+      }).then(() => console.log("Google user synced to backend"));
+    }
+  }, [session, syncUser]);
 
   const links = [
     { name: "Home", href: "#" },
@@ -18,8 +33,8 @@ const NavBar = () => {
   ];
 
   const moreLinks = [
-    { name: "prices", href: "/prices", icon: <FaCode size={16} /> },
-    { name: "policy", href: "/policy ", icon: <Archive size={16} /> },
+    { name: "Prices", href: "/prices", icon: <FaCode size={16} /> },
+    { name: "Policy", href: "/policy", icon: <Archive size={16} /> },
     { name: "Blogs", href: "/blogs", icon: <BookText size={16} /> },
   ];
 
@@ -27,7 +42,7 @@ const NavBar = () => {
     <nav
       className={clsx(
         normal_poppins.className,
-        "bg-white w-full px-6 md:px-10 py-4 shadow-sm  top-0 z-50"
+        "bg-white w-full px-6 md:px-10 py-4 shadow-sm top-0 z-50"
       )}
     >
       <div className="flex items-center justify-between w-full">
@@ -83,12 +98,26 @@ const NavBar = () => {
 
         {/* Desktop Buttons */}
         <div className="hidden md:flex gap-4">
-          <button className="bg-white text-black rounded-lg px-4 py-2 hover:bg-gray-200 transition-colors">
-            Sign Up
-          </button>
-          <button className="bg-white text-black rounded-lg px-4 py-2 hover:bg-gray-200 transition-colors">
-            Login
-          </button>
+          {session ? (
+            <>
+              <span className="text-black font-medium">
+                {session.user?.name}
+              </span>
+              <button
+                onClick={() => signOut()}
+                className="bg-red-500 text-white rounded-lg px-4 py-2 hover:bg-red-600 transition-colors"
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => signIn("google")}
+              className="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors"
+            >
+              Sign In
+            </button>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -100,7 +129,7 @@ const NavBar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu (overlays without shifting logo/buttons) */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-md border-t z-40 flex flex-col gap-2 p-4">
           {links.map((link) => (
@@ -113,7 +142,7 @@ const NavBar = () => {
             </Link>
           ))}
 
-          {/* More Dropdown Links */}
+          {/* More Links */}
           <div className="flex flex-col gap-2 mt-2 border-t pt-2">
             {moreLinks.map((link) => (
               <Link
@@ -129,12 +158,26 @@ const NavBar = () => {
 
           {/* Mobile Buttons */}
           <div className="flex gap-4 mt-3">
-            <button className="bg-white text-black rounded-lg px-4 py-2 hover:bg-gray-200 transition-colors">
-              Sign Up
-            </button>
-            <button className="bg-white text-black rounded-lg px-4 py-2 hover:bg-gray-200 transition-colors">
-              Login
-            </button>
+            {session ? (
+              <>
+                <span className="text-black font-medium">
+                  {session.user?.name}
+                </span>
+                <button
+                  onClick={() => signOut()}
+                  className="bg-red-500 text-white rounded-lg px-4 py-2 hover:bg-red-600 transition-colors"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => signIn("google")}
+                className="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors"
+              >
+                Sign In
+              </button>
+            )}
           </div>
         </div>
       )}
